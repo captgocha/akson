@@ -10,6 +10,7 @@
             <span class="city-select__location">Череповец</span>
           </div>
         </div>
+        <v-modal v-if="isOpen"></v-modal>
       </div>
     </div>
     <nav class="navigation">
@@ -30,8 +31,13 @@
 </template>
 
 <script>
+import VModal from '@/components/v-modal'
+
 export default {
   name: 'v-header',
+  components: {
+    VModal
+  },
   data: () => ({
     isOpen: false,
     navigationItems: [
@@ -45,10 +51,10 @@ export default {
   }),
   methods: {
     showModal() {
-      
+      this.isOpen = true;
     },
     hiddenModal() {
-
+      this.isOpen = false
     }
   }
 }
