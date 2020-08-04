@@ -1,10 +1,14 @@
 <template>
-  <div class="v-modal">
+  <div
+    class="v-modal"
+    ref="vModal"
+  >
 
     <div class="v-modal-header">
-      <h2 class="v-modal-title">Ваш город Череповец</h2>
+      <h2 class="v-modal-title">Ваш город {{ radioButtonValue }}</h2>
       <div 
         class="v-modal-close"
+        @click="hiddenModal"
       >
         <span class="v-modal-close__line"></span>
         <span class="v-modal-close__line"></span>
@@ -13,55 +17,151 @@
         <div class="input">
           <input
             class="input__field input__field_search-city"
+            ref="searchInput"
             type="text"
             name="search-city"
             placeholder="Введите город"
+            v-model="searchInputValue"
+            @input="searchCity(searchInputValue)"
           >
-          <div class="input__clear">
-            <span class="input__clear__line"></span>
-            <span class="input__clear__line"></span>
-          </div>
+          <transition name="fade">
+            <div 
+              class="input__clear"
+              v-show="searchInputValue.length > 0"
+              @click="clearInput"
+            >
+              <span class="input__clear__line"></span>
+              <span class="input__clear__line"></span>
+            </div>
+          </transition>
         </div>
-        <button class="button button_search-city">Найти</button>
+        <transition name="fade">
+          <button 
+            class="button button_search-city"
+            v-show="searchInputValue.length > 2"
+            @click="searchCity(searchInputValue)"
+          >
+            Найти
+          </button>
+        </transition>
       </div>
     </div>
+    <!-- v-modal-header -->
 
     <div class="v-modal-body">
       <v-tabs>
         <v-tab
           name="Наши магазины"
+          :cityCounter="filteredCityes.length"
           :selected="true"
         >
-          
+          <div class="v-tab-content v-tab-content_shops">
+            <label
+              class="radio-button"
+              v-for="city in filteredCityes"
+              :key="city.id"
+            >
+              <input
+                class="radio-button__field"
+                type="radio"
+                name="cityes"
+                :value="city.name"
+                :checked="city.checked"
+                v-model="radioButtonValue"
+              >
+              <span class="radio-button__caption">{{ city.name }}</span>
+            </label>
+          </div>
         </v-tab>
-        <v-tab
-          name="Пункты выдачи заказа"
-        >
-
+        <v-tab name="Пункты выдачи заказа">
+          <div class="v-tab-content v-tab-content_pick-up">
+            
+          </div>
         </v-tab>
       </v-tabs>
     </div>
+    <!-- v-modal-body -->
 
     <div class="v-modal-footer">
-      Не нашли свой населенный пункт в списке? Воспользуйтесь <span>поиском</span>.
+      Не нашли свой населенный пункт в списке? Воспользуйтесь <span @click="focusingOnInput">поиском</span>.
     </div>
+    <!-- v-modal-footer -->
 
   </div>
 </template>
 
 <script>
-import VTabs from '@/components/v-tabs'
-import VTab from '@/components/v-tab'
+import vTabs from '@/components/v-tabs'
+import vTab from '@/components/v-tab'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'v-modal',
   components: {
-    VTabs,
-    VTab
+    vTabs,
+    vTab
   },
   data: () => ({
-
-  })
+    cityesData: [],
+    searchInputValue: '',
+    radioButtonValue: 'Москва'
+  }),
+  computed: {
+    ...mapGetters([
+      'CITYES',
+      'SEARCH_CITY_VALUE'
+    ]),
+    filteredCityes() {
+      if (this.cityesData.length) {
+        return this.cityesData
+      } else {
+        return this.CITYES
+      }
+    }
+  },
+  methods: {
+    hiddenModal() {
+      this.$emit('hiddenModal');
+    },
+    focusingOnInput() {
+      this.$refs.searchInput.focus();
+    },
+    clearInput() {
+      this.searchInputValue = '';
+      this.GET_CLEAR_SEARCH_CITY_VALUE();
+    },
+    searchCity(value) {
+      this.GET_SEARCH_CITY_TO_VUEX(value);
+    },
+    sortCityesBySearchValue(value) {
+      this.cityesData = [...this.CITYES];
+      if (value) {
+        this.cityesData = this.cityesData.filter(function(item) {
+          return item.name.toLowerCase().includes(value.toLowerCase())
+        })
+      } else {
+        this.cityesData = this.CITYES;
+      }
+    },
+    ...mapActions([
+      'GET_CITYES_FROM_API',
+      'GET_SEARCH_CITY_TO_VUEX',
+      'GET_CLEAR_SEARCH_CITY_VALUE'
+    ])
+  },
+  watch: {
+    SEARCH_CITY_VALUE() {
+      this.sortCityesBySearchValue(this.SEARCH_CITY_VALUE);
+    }
+  },
+  mounted() {
+    this.GET_CITYES_FROM_API()
+      .then((response) => {
+        if (response) {
+          this.sortCityesBySearchValue(this.SEARCH_CITY_VALUE)
+        }
+      })
+  }
 }
 </script>
 
@@ -69,6 +169,7 @@ export default {
 .v-modal {
   position: absolute;
   width: 640px;
+  height: auto;
   padding: 24px;
   border-radius: 2px;
   background: #fff;
@@ -113,6 +214,7 @@ export default {
     width: 18px;
     height: 12px;
     transition: .2s;
+    z-index: 9999;
     cursor: pointer;
 
     &::before {
@@ -215,4 +317,61 @@ export default {
     background: #54095B;
   }
 }
+
+.v-tab-content {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  &_shops {
+    max-height: 180px;
+  }
+
+  &_pick-up {
+    max-height: 240px;
+    overflow-y: auto;
+  }
+}
+
+.radio-button {
+  position: relative;
+  display: block;
+  width: 200px;
+  padding: 4px 0 4px 8px;
+  font-size: 14px;
+  color: #333;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover &__caption {
+    color: #FF3030;
+  }
+
+  &__field {
+    display: none;
+  }
+
+  &__field:checked + &__caption {
+    color: #800080;
+  }
+
+  &__caption {
+    display: block;
+    user-select: none;
+  }
+}
+
+
+/*             Анимация появления кнопок                */
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+/*             END Анимация появления кнопок            */
 </style>

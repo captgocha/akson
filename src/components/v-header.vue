@@ -5,12 +5,18 @@
         <div class="top-menu__wrapper">
           <div 
             class="city-select"
-            @click="showModal"
+            :class="{'active': isOpen}"
+            @click="isOpen =! isOpen"
           >
             <span class="city-select__location">Череповец</span>
           </div>
         </div>
-        <v-modal v-if="isOpen"></v-modal>
+        <transition name="show-modal">
+          <v-modal 
+            v-if="isOpen"
+            @hiddenModal="hiddenModal"
+          ></v-modal>
+        </transition>
       </div>
     </div>
     <nav class="navigation">
@@ -31,12 +37,12 @@
 </template>
 
 <script>
-import VModal from '@/components/v-modal'
+import vModal from '@/components/v-modal'
 
 export default {
   name: 'v-header',
   components: {
-    VModal
+    vModal
   },
   data: () => ({
     isOpen: false,
@@ -50,11 +56,8 @@ export default {
     ]
   }),
   methods: {
-    showModal() {
-      this.isOpen = true;
-    },
     hiddenModal() {
-      this.isOpen = false
+      this.isOpen = false;
     }
   }
 }
@@ -99,9 +102,14 @@ export default {
   &__location::after {
     content: url('~@/assets/images/city-select-arrow.svg');
     position: absolute;
-    top: -2px;
+    top: -1px;
     right: 0;
     transition: transform .3s ease-out;
+  }
+
+  &.active &__location::after {
+    transform: rotate(-180deg);
+    top: 0;
   }
 }
 
@@ -127,4 +135,20 @@ export default {
     color: #c44400;
   }
 }
+
+/*             Анимация появления модального окна              */
+
+.show-modal-enter-active {
+  transition: all .3s ease;
+}
+
+.show-modal-leave-active {
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1);
+}
+
+.show-modal-enter, .show-modal-leave-to {
+  opacity: 0;
+}
+
+/*             END Анимация появления модального окна            */
 </style>

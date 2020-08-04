@@ -1,0 +1,130 @@
+{
+  "cityes": [
+    {
+      "id": 1,
+      "name": "Москва",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": true
+    },
+    {
+      "id": 2,
+      "name": "Владимир",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 3,
+      "name": "Вологда",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 4,
+      "name": "Дзержинск",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 5,
+      "name": "Иваново",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 6,
+      "name": "Калуга Болдина",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 7,
+      "name": "Калуга Московская",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 8,
+      "name": "Кинешма",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 9,
+      "name": "Ковров",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 10,
+      "name": "Кострома",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 11,
+      "name": "Нижний Новгород",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 12,
+      "name": "Переславль-Залесский",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 13,
+      "name": "Рыбинск",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 14,
+      "name": "Смоленск",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 15,
+      "name": "Тамбов",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 16,
+      "name": "Череповец",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 17,
+      "name": "Ярославль Громова",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    },
+    {
+      "id": 18,
+      "name": "Ярославль Фрунзе",
+      "views": 73,
+      "attendance": 1.1,
+      "checked": false
+    }
+  ]
+}

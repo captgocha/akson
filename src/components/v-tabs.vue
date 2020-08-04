@@ -1,6 +1,6 @@
 <template>
   <div class="v-tabs">
-    <ul class="v-tabs__buttons">
+    <ul class="v-tabs__buttons" style="margin-bottom: 20px">
       <li
         class="v-tabs__buttons__item"
         :class="{ 'active': tab.isActive }"
@@ -9,11 +9,11 @@
         @click="selectTab(tab)"
       >
         {{ tab.name }}
-        <span></span>
+        <span>{{ cityCounter }}</span>
       </li>
     </ul>
     <div class="v-tabs__inner">
-      <slot>{{ mark }}</slot>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -22,9 +22,9 @@
 export default {
   name: 'v-tabs',
   props: {
-    mark: {
-      type: String,
-      default: () => '18'
+    cityCounter: {
+      type: Number,
+      default: () => 18
     }
   },
   data: () => ({

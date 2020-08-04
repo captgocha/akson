@@ -15,6 +15,10 @@ export default {
       type: String,
       required: true
     },
+    mark: {
+      type: String,
+      default: () => '18'
+    },
     selected: {
       type: Boolean,
       default: false
