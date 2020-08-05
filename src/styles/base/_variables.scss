@@ -1,0 +1,24 @@
+/* Цвета */
+$mainTextColor              : #666;
+$primaryTextColor           : #333;
+$highlightColor             : #FF000A;
+
+
+/* Размеры и разрешение экрана */
+$containerSize              : 1180px;
+
+$mobileMedia                : 375px;
+$tabletMedia                : 1024px;
+$laptopMedia                : 1440px;
+$desctopMedia               : 1920px;
+
+
+/* Оформление шрифтов */
+@mixin main-font {
+  font: {
+    family: 'Open Sans', 'Arial', sans-serif;
+    size: 13px;
+    weight: 400;
+  }
+  color: $mainTextColor;
+}

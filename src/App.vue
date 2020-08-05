@@ -6,23 +6,23 @@
 </template>
 
 <script>
-import VHeader from '@/components/v-header'
+import vHeader from '@/components/v-header'
 
 export default {
   name: 'App',
   components: {
-    VHeader
+    vHeader
   }
 }
 </script>
 
 <style lang="scss">
 #app {
-  font-family: 'Open Sans', 'Arial', sans-serif;
+  @include main-font;
 }
 
 .container {
-  max-width: 1180px;
+  max-width: $containerSize;
   margin: 0 auto;
 }
 </style>

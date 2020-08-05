@@ -60,6 +60,7 @@
               class="radio-button"
               v-for="city in filteredCityes"
               :key="city.id"
+              @click="sendDataToParent"
             >
               <input
                 class="radio-button__field"
@@ -126,6 +127,9 @@ export default {
     focusingOnInput() {
       this.$refs.searchInput.focus();
     },
+    sendDataToParent() {
+      this.$emit('sendCityName', this.radioButtonValue);
+    },
     clearInput() {
       this.searchInputValue = '';
       this.GET_CLEAR_SEARCH_CITY_VALUE();
@@ -188,7 +192,7 @@ export default {
   &-footer {
     font-size: 14px;
     line-height: 19px;
-    color: #666;
+    color: $mainTextColor;
 
     span {
       text-decoration: underline;
@@ -203,7 +207,7 @@ export default {
   &-title {
     font-weight: bold;
     font-size: 24px;
-    color: #333;
+    color: $primaryTextColor;
     margin-bottom: 26px;
   }
 
@@ -341,7 +345,7 @@ export default {
   width: 200px;
   padding: 4px 0 4px 8px;
   font-size: 14px;
-  color: #333;
+  color: $primaryTextColor;
   user-select: none;
   cursor: pointer;
 

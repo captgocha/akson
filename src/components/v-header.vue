@@ -8,13 +8,14 @@
             :class="{'active': isOpen}"
             @click="isOpen =! isOpen"
           >
-            <span class="city-select__location">Череповец</span>
+            <span class="city-select__location">{{ cityName }}</span>
           </div>
         </div>
         <transition name="show-modal">
           <v-modal 
             v-if="isOpen"
             @hiddenModal="hiddenModal"
+            @sendCityName="getFromChildCityName"
           ></v-modal>
         </transition>
       </div>
@@ -45,6 +46,8 @@ export default {
     vModal
   },
   data: () => ({
+    // Название города работает плохо, только по двойному клику
+    cityName: 'Москва',
     isOpen: false,
     navigationItems: [
       { id: 1, name: 'Строительные материалы', path: '/construction_materials' },
@@ -58,6 +61,9 @@ export default {
   methods: {
     hiddenModal() {
       this.isOpen = false;
+    },
+    getFromChildCityName(data) {
+      this.cityName = data;
     }
   }
 }
@@ -89,7 +95,7 @@ export default {
     padding: 0 12px 0 20px;
     font-size: 12px;
     font-weight: 600;
-    color: #333;
+    color: $primaryTextColor;
   }
 
   &__location::before {
@@ -127,7 +133,7 @@ export default {
     text-decoration: none;
     font-size: 13px;
     font-weight: 400;
-    color: #666;
+    color: $mainTextColor;
     transition: All 0.3s ease 0s;
   }
 

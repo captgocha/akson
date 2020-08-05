@@ -53,7 +53,7 @@ export default {
     font-size: 16px;
     font-weight: bold;
     line-height: 22px;
-    color: #666;
+    color: $mainTextColor;
     padding-bottom: 8px;
     cursor: pointer;
 
@@ -62,7 +62,7 @@ export default {
     }
 
     &.active {
-      color: #333;
+      color: $primaryTextColor;
       border-bottom: 2px solid #800080;
     }
 
@@ -72,7 +72,7 @@ export default {
       font-size: 10px;
       line-height: 14px;
       font-weight: normal;
-      color: #666;
+      color: $mainTextColor;
     }
 
     &.active span {
